@@ -1,0 +1,95 @@
+
+
+
+/* VM SETUP */
+
+
+1. Install vb
+2. Install Ubuntu server 
+3. Create VM using ubuntu server image
+4. Start the server using username and password keep short frequently use
+5. Bridged the NAT to acess from your local 
+6. Open shell on local/host   machine
+7. Install ssh on the ubuntu server using "sudo apt install openssh-server"
+8. Install avahi-daemon using "sudo apt-get install avahi-daemon"
+9. Do ssh keygen in the shell of the local/host machine
+10. Do ping to check server is running or not "ping username@server-name.local"
+11. SSH "username@server-name.local"
+
+
+
+
+/* To Check Avahi Is Running Or not */
+1. "ps ax|grep avahi" if it is running then can be seen "server-name.local"
+
+
+
+
+/* Extra For Accessing Server on shell/Terminal  Without password */
+
+1. Repeat step 9 above
+2. Create config file in .ssh of host/local machine 
+    
+Write Host hm
+
+HostName hm.local
+    User harsh
+    IdentityFile C:/Users/harsh/.ssh/id_rsa
+    IdentitiesOnly yes
+
+Host hs
+    HostName hs.local
+    User h
+    IdentityFile C:/Users/harsh/.ssh/id_rsa  
+    IdentitiesOnly yes
+For Multiple server
+
+3.Now Paste the public key of host/local machine in rmote machine .ssh (authorized key)
+
+
+/* To Create ssh key to get access of private repo of github */
+
+1. ssh-keygen
+2. Keep Entering
+3. Get pub key and paste it where you want to get access you will get
+
+
+
+
+/* Install Step Of Node using NVM on Remote(server) Machine */
+
+1. curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.5/install.sh | bash
+2. export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
+
+3. source ~/.bashrc
+4. nvm install node (for latest version) or nvm install v20.16.0
+
+
+
+/* Install Docker */
+
+///////////////////////// 
+
+Install Docker Engine for the first time on a new host machine, you need to set up the Docker repository. Afterward, you can install and update Docker from the repository.
+
+////////////////////////
+
+1. # Add Docker's official GPG key:
+sudo apt-get update
+sudo apt-get install ca-certificates curl
+sudo install -m 0755 -d /etc/apt/keyrings
+sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc
+sudo chmod a+r /etc/apt/keyrings/docker.asc
+
+# Add the repository to Apt sources:
+echo \
+  "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu \
+  $(. /etc/os-release && echo "$VERSION_CODENAME") stable" | \
+  sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+sudo apt-get update
+
+
+2. sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+   ------> step 2 will ask yes then press 'y'
+
